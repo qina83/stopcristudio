@@ -3,7 +3,7 @@ import CreateProject from './components/CreateProject'
 import ImportProject from './components/ImportProject'
 import ApiList from './components/ApiList'
 import ApiSidebar from './components/ApiSidebar'
-import type { OpenAPIProject, OpenAPISpec } from './types/openapi'
+import type { OpenAPIProject, OpenAPISpec, APIOperation, SecurityScheme, QueryParameter } from './types/openapi'
 import './App.css'
 
 function App() {
@@ -11,6 +11,28 @@ function App() {
   const [currentProject, setCurrentProject] = useState<OpenAPIProject | null>(null)
   const [sidebarMode, setSidebarMode] = useState<'create' | 'edit' | null>(null)
   const [editingApi, setEditingApi] = useState<{ path: string; method: string } | null>(null)
+
+  // Helper function per estrarre l'autenticazione da un'API
+  const extractAuthFromApi = (project: OpenAPIProject, path: string, method: string): string => {
+    const apiOperation = project.spec.paths[path]?.[method]
+    if (apiOperation?.security && Array.isArray(apiOperation.security) && apiOperation.security.length > 0) {
+      const authSchemes = Object.keys(apiOperation.security[0])
+      return authSchemes[0] || 'none'
+    }
+    return 'none'
+  }
+
+  // Helper function per estrarre i parametri da un'API
+  const extractParametersFromApi = (project: OpenAPIProject, path: string, method: string): QueryParameter[] => {
+    const apiOperation = project.spec.paths[path]?.[method]
+    return apiOperation?.parameters || []
+  }
+
+  // Helper function per estrarre il body da un'API
+  const extractRequestBodyFromApi = (project: OpenAPIProject, path: string, method: string): QueryParameter | null => {
+    const apiOperation = project.spec.paths[path]?.[method]
+    return apiOperation?.requestBody || null
+  }
 
   const handleCreateProject = (name: string, spec: OpenAPISpec) => {
     const newProject: OpenAPIProject = {
@@ -54,25 +76,81 @@ function App() {
     URL.revokeObjectURL(url)
   }
 
-  const handleAddApi = (path: string, method: string) => {
+  const handleAddApi = (path: string, method: string, auth: string, parameters: QueryParameter[], requestBody?: QueryParameter | null) => {
     if (!currentProject) return
 
-    const updatedSpec = {
+    const apiOperation: APIOperation = {
+      summary: `${method.toUpperCase()} ${path}`,
+      parameters: parameters.length > 0 ? parameters : undefined,
+      requestBody: requestBody || undefined,
+      responses: {
+        '200': {
+          description: 'Successful response',
+        },
+      },
+    }
+
+    // Aggiungi l'autenticazione all'operazione se necessario
+    if (auth !== 'none') {
+      apiOperation.security = [{ [auth]: [] }]
+    }
+
+    const updatedSpec: OpenAPISpec = {
       ...currentProject.spec,
       paths: {
         ...currentProject.spec.paths,
         [path]: {
           ...(currentProject.spec.paths[path] || {}),
-          [method]: {
-            summary: `${method.toUpperCase()} ${path}`,
-            responses: {
-              '200': {
-                description: 'Successful response',
+          [method]: apiOperation,
+        },
+      },
+    }
+
+    // Aggiungi lo schema di sicurezza se non è 'none'
+    if (auth !== 'none') {
+      if (!updatedSpec.components) {
+        updatedSpec.components = {}
+      }
+      if (!updatedSpec.components.securitySchemes) {
+        updatedSpec.components.securitySchemes = {}
+      }
+
+      // Aggiungi lo schema di sicurezza appropriato
+      if (auth === 'api-key' && !updatedSpec.components.securitySchemes['api-key']) {
+        const apiKeyScheme: SecurityScheme = {
+          type: 'apiKey',
+          in: 'header',
+          name: 'X-API-Key',
+        }
+        updatedSpec.components.securitySchemes['api-key'] = apiKeyScheme
+      } else if (auth === 'bearer' && !updatedSpec.components.securitySchemes['bearer']) {
+        const bearerScheme: SecurityScheme = {
+          type: 'http',
+          scheme: 'bearer',
+        }
+        updatedSpec.components.securitySchemes['bearer'] = bearerScheme
+      } else if (auth === 'basic' && !updatedSpec.components.securitySchemes['basic']) {
+        const basicScheme: SecurityScheme = {
+          type: 'http',
+          scheme: 'basic',
+        }
+        updatedSpec.components.securitySchemes['basic'] = basicScheme
+      } else if (auth === 'oauth2' && !updatedSpec.components.securitySchemes['oauth2']) {
+        const oauth2Scheme: SecurityScheme = {
+          type: 'oauth2',
+          flows: {
+            authorizationCode: {
+              authorizationUrl: 'https://example.com/oauth/authorize',
+              tokenUrl: 'https://example.com/oauth/token',
+              scopes: {
+                'read:api': 'Read access',
+                'write:api': 'Write access',
               },
             },
           },
-        },
-      },
+        }
+        updatedSpec.components.securitySchemes['oauth2'] = oauth2Scheme
+      }
     }
 
     const updatedProject = {
@@ -91,7 +169,7 @@ function App() {
     setSidebarMode(null)
   }
 
-  const handleEditApi = (oldPath: string, oldMethod: string, newPath: string, newMethod: string) => {
+  const handleEditApi = (oldPath: string, oldMethod: string, newPath: string, newMethod: string, auth: string, parameters: QueryParameter[], requestBody?: QueryParameter | null) => {
     if (!currentProject) return
 
     const newPaths = { ...currentProject.spec.paths }
@@ -107,19 +185,76 @@ function App() {
       delete newPaths[oldPath]
     }
     
-    // Aggiungi la nuova API
+    // Aggiungi la nuova API con autenticazione, parametri e body aggiornati
     if (!newPaths[newPath]) {
       newPaths[newPath] = {}
     }
     
-    newPaths[newPath][newMethod] = {
+    const updatedApiData: APIOperation = {
       ...apiData,
       summary: `${newMethod.toUpperCase()} ${newPath}`,
+      parameters: parameters.length > 0 ? parameters : undefined,
+      requestBody: requestBody || undefined,
     }
 
-    const updatedSpec = {
+    // Aggiorna l'autenticazione
+    if (auth !== 'none') {
+      updatedApiData.security = [{ [auth]: [] }]
+    } else {
+      delete updatedApiData.security
+    }
+
+    newPaths[newPath][newMethod] = updatedApiData
+
+    const updatedSpec: OpenAPISpec = {
       ...currentProject.spec,
       paths: newPaths,
+    }
+
+    // Aggiungi lo schema di sicurezza se necessario
+    if (auth !== 'none') {
+      if (!updatedSpec.components) {
+        updatedSpec.components = {}
+      }
+      if (!updatedSpec.components.securitySchemes) {
+        updatedSpec.components.securitySchemes = {}
+      }
+
+      if (auth === 'api-key' && !updatedSpec.components.securitySchemes['api-key']) {
+        const apiKeyScheme: SecurityScheme = {
+          type: 'apiKey',
+          in: 'header',
+          name: 'X-API-Key',
+        }
+        updatedSpec.components.securitySchemes['api-key'] = apiKeyScheme
+      } else if (auth === 'bearer' && !updatedSpec.components.securitySchemes['bearer']) {
+        const bearerScheme: SecurityScheme = {
+          type: 'http',
+          scheme: 'bearer',
+        }
+        updatedSpec.components.securitySchemes['bearer'] = bearerScheme
+      } else if (auth === 'basic' && !updatedSpec.components.securitySchemes['basic']) {
+        const basicScheme: SecurityScheme = {
+          type: 'http',
+          scheme: 'basic',
+        }
+        updatedSpec.components.securitySchemes['basic'] = basicScheme
+      } else if (auth === 'oauth2' && !updatedSpec.components.securitySchemes['oauth2']) {
+        const oauth2Scheme: SecurityScheme = {
+          type: 'oauth2',
+          flows: {
+            authorizationCode: {
+              authorizationUrl: 'https://example.com/oauth/authorize',
+              tokenUrl: 'https://example.com/oauth/token',
+              scopes: {
+                'read:api': 'Read access',
+                'write:api': 'Write access',
+              },
+            },
+          },
+        }
+        updatedSpec.components.securitySchemes['oauth2'] = oauth2Scheme
+      }
     }
 
     const updatedProject = {
@@ -221,6 +356,9 @@ function App() {
                 mode={sidebarMode}
                 initialPath={editingApi?.path || ''}
                 initialMethod={editingApi?.method || 'GET'}
+                initialAuth={editingApi ? extractAuthFromApi(currentProject!, editingApi.path, editingApi.method) : 'none'}
+                initialParameters={editingApi ? extractParametersFromApi(currentProject!, editingApi.path, editingApi.method) : []}
+                initialRequestBody={editingApi ? extractRequestBodyFromApi(currentProject!, editingApi.path, editingApi.method) : null}
                 onSave={handleAddApi}
                 onUpdate={handleEditApi}
                 onDelete={handleDeleteApi}

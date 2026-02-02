@@ -1,0 +1,680 @@
+.query-parameter-editor {
+    padding: 16px;
+    background-color: #1e1e1e;
+    border-left: 1px solid #444;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.query-parameter-editor.empty {
+    justify-content: center;
+    align-items: center;
+    color: #999;
+}
+
+.query-parameter-editor.empty p {
+    margin: 0;
+    text-align: center;
+    font-size: 13px;
+}
+
+.editor-header {
+    margin-bottom: 16px;
+    flex-shrink: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #444;
+}
+
+.editor-header h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #d4d4d4;
+}
+
+.editor-param-name {
+    margin: 0;
+    font-size: 13px;
+    color: #999;
+    font-weight: 400;
+    font-family: 'Monaco', 'Courier New', monospace;
+    background-color: #252525;
+    padding: 6px 8px;
+    border-radius: 3px;
+    border-left: 3px solid #646cff;
+}
+
+.editor-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    min-height: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #d4d4d4;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group select,
+.form-group textarea {
+    padding: 8px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 12px;
+    background-color: #2a2a2a;
+    color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="number"]:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.form-group input[type="checkbox"] {
+    margin-right: 6px;
+    cursor: pointer;
+    accent-color: #646cff;
+}
+
+.form-group label:has(input[type="checkbox"]) {
+    flex-direction: row;
+    align-items: center;
+    font-weight: 400;
+}
+
+.object-properties {
+    background-color: #252525;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px dashed #444;
+    margin-top: 8px;
+}
+
+.object-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.object-header h5 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #d4d4d4;
+}
+
+.btn-add-prop {
+    padding: 4px 8px;
+    background-color: #646cff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn-add-prop:hover {
+    background-color: #5558d6;
+}
+
+.object-empty {
+    text-align: center;
+    padding: 12px;
+    color: #999;
+    font-size: 11px;
+    background-color: #1e1e1e;
+    border-radius: 3px;
+}
+
+.properties-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.property-item {
+    background-color: #2a2a2a;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #444;
+}
+
+.property-name-type {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.prop-name-input {
+    flex: 1;
+    min-width: 0;
+}
+
+.prop-type-select {
+    flex: 0 0 auto;
+    width: 90px;
+}
+
+.btn-remove-prop {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.btn-remove-prop:hover {
+    color: #b71c1c;
+}
+
+.nested-object {
+    background-color: #252525;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    margin-top: 12px;
+}
+
+.nested-object-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.nested-object-header h5 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #d4d4d4;
+}
+
+.btn-add-nested-prop {
+    padding: 4px 8px;
+    background-color: #646cff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.btn-add-nested-prop:hover {
+    background-color: #5558d6;
+}
+
+.nested-empty {
+    margin: 0;
+    padding: 8px;
+    text-align: center;
+    color: #999;
+    font-size: 11px;
+    background-color: #1e1e1e;
+    border-radius: 3px;
+}
+
+.nested-properties-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nested-prop-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background-color: #1e1e1e;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #444;
+}
+
+.nested-prop-name {
+    flex: 1;
+    padding: 6px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: #2a2a2a;
+    color: #f9f9f9;
+    font-size: 11px;
+    min-width: 0;
+}
+
+.nested-prop-name:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.nested-prop-type {
+    flex: 0 0 auto;
+    padding: 6px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: #2a2a2a;
+    color: #f9f9f9;
+    font-size: 11px;
+    width: 100px;
+}
+
+.nested-prop-type:focus {
+    outline: none;
+    border-color: #646cff;
+}
+
+.btn-remove-nested-prop {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 2px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-remove-nested-prop:hover {
+    color: #b71c1c;
+}
+
+/* New nested editor styles */
+
+.property-item-complex {
+    /* Highlight complex types */
+}
+
+.btn-expand-prop {
+    background: none;
+    border: none;
+    color: #646cff;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 12px;
+    transition: transform 0.2s, color 0.2s;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-expand-prop:hover {
+    color: #5558d6;
+}
+
+.btn-expand-prop.expanded {
+    transform: rotate(90deg);
+}
+
+/* Recursive nested property editor styles */
+
+.nested-property-item {
+    background-color: #2a2a2a;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #444;
+    margin-bottom: 8px;
+}
+
+.nested-property-item.depth-2 {
+    background-color: #272727;
+    margin-left: 12px;
+}
+
+.nested-property-item.depth-3 {
+    background-color: #252525;
+    margin-left: 24px;
+}
+
+.nested-property-item.depth-4 {
+    background-color: #232323;
+    margin-left: 36px;
+}
+
+.nested-property-item.depth-5,
+.nested-property-item.depth-6,
+.nested-property-item.depth-7,
+.nested-property-item.depth-8 {
+    background-color: #212121;
+    margin-left: 48px;
+}
+
+.nested-prop-header {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-expand-nested {
+    background: none;
+    border: none;
+    color: #646cff;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 12px;
+    transition: transform 0.2s, color 0.2s;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-expand-nested:hover {
+    color: #5558d6;
+}
+
+.btn-expand-nested.expanded {
+    transform: rotate(90deg);
+}
+
+.nested-prop-name-input {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: #1e1e1e;
+    color: #f9f9f9;
+    font-size: 11px;
+    min-width: 0;
+    font-family: inherit;
+}
+
+.nested-prop-name-input:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.nested-prop-type-select {
+    flex: 0 0 auto;
+    padding: 6px 8px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: #1e1e1e;
+    color: #f9f9f9;
+    font-size: 11px;
+    width: 120px;
+    font-family: inherit;
+}
+
+.nested-prop-type-select:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.btn-delete-nested {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-delete-nested:hover {
+    color: #b71c1c;
+}
+
+.nested-editor-content {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #444;
+}
+
+.nested-object-section,
+.nested-array-section {
+    background-color: #1e1e1e;
+    padding: 12px;
+    border-radius: 3px;
+    border-left: 3px solid #646cff;
+}
+
+.nested-array-section {
+    margin-top: 12px;
+}
+
+.nested-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.nested-section-header h6 {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #d4d4d4;
+    flex-shrink: 0;
+}
+
+.nested-section-header label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #d4d4d4;
+    flex-shrink: 0;
+}
+
+.btn-add-nested-prop-small {
+    padding: 4px 8px;
+    background-color: #646cff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.btn-add-nested-prop-small:hover {
+    background-color: #5558d6;
+}
+
+.array-type-nested-select {
+    padding: 6px 8px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: #252525;
+    color: #f9f9f9;
+    font-size: 11px;
+    width: 100%;
+    font-family: inherit;
+}
+
+.array-type-nested-select:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.nested-array-object-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #444;
+}
+
+.nested-props-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nested-empty-msg {
+    margin: 0;
+    padding: 8px;
+    text-align: center;
+    color: #999;
+    font-size: 11px;
+    background-color: #252525;
+    border-radius: 3px;
+}
+
+.nested-editor-section {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #444;
+    background-color: #1e1e1e;
+    margin-left: -8px;
+    margin-right: -8px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.nested-object-editor,
+.nested-array-editor {
+    background-color: #252525;
+    padding: 12px;
+    border-radius: 4px;
+    border-left: 3px solid #646cff;
+}
+
+.nested-editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.nested-editor-header h6 {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #d4d4d4;
+}
+
+.btn-add-nested {
+    padding: 4px 8px;
+    background-color: #646cff;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-add-nested:hover {
+    background-color: #5558d6;
+}
+
+.array-type-select {
+    padding: 6px 8px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: #2a2a2a;
+    color: #f9f9f9;
+    font-size: 11px;
+    width: 100%;
+}
+
+.array-type-select:focus {
+    outline: none;
+    border-color: #646cff;
+}
+
+.array-object-properties {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #444;
+}
+
+.nested-props-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nested-prop-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    background-color: #1e1e1e;
+    padding: 8px;
+    border-radius: 3px;
+    border: 1px solid #444;
+}
+
+.nested-prop-name {
+    flex: 1;
+    padding: 6px 8px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: #2a2a2a;
+    color: #f9f9f9;
+    font-size: 11px;
+    min-width: 0;
+    font-family: inherit;
+}
+
+.nested-prop-name:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.nested-prop-type {
+    flex: 0 0 auto;
+    padding: 6px 8px;
+    border: 1px solid #444;
+    border-radius: 3px;
+    background-color: #2a2a2a;
+    color: #f9f9f9;
+    font-size: 11px;
+    width: 120px;
+    font-family: inherit;
+}
+
+.nested-prop-type:focus {
+    outline: none;
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.btn-remove-nested {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 4px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+}
+
+.btn-remove-nested:hover {
+    color: #b71c1c;
+}

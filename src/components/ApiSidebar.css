@@ -2,8 +2,11 @@
     background: #1e1e1e;
     padding: 2rem;
     height: 100%;
-    min-width: 350px;
+    min-width: 1200px;
     border-left: 1px solid #333;
+    display: flex;
+        flex-direction: column;
+        overflow: hidden;
 }
 
 .sidebar-header {
@@ -11,6 +14,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 2rem;
+    flex-shrink: 0;
 }
 
 .sidebar-header h3 {
@@ -39,8 +43,62 @@
     color: #f9f9f9;
 }
 
+.sidebar-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.form-three-columns {
+    display: flex;
+    gap: 2rem;
+    flex: 1;
+    min-height: 0;
+}
+
+.form-left-column {
+    flex: 0 0 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-right: 2rem;
+    border-right: 1px solid #444;
+}
+
+.form-center-column {
+    flex: 0 0 280px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding-right: 2rem;
+    border-right: 1px solid #444;
+}
+
+.form-right-column {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+}
+
+.form-right-column::-webkit-scrollbar {
+    width: 6px;
+}
+
+.form-right-column::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.form-right-column::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 3px;
+}
+
+.form-right-column::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 .sidebar-form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
     text-align: left;
 }
 
@@ -63,6 +121,7 @@
     background: #2a2a2a;
     color: #f9f9f9;
     transition: border-color 0.2s;
+    box-sizing: border-box;
 }
 
 .sidebar-form-group input:focus,
@@ -76,6 +135,7 @@
     flex-direction: column;
     gap: 0.75rem;
     margin-top: 2rem;
+    flex-shrink: 0;
 }
 
 .sidebar-actions .btn-primary {
@@ -110,4 +170,102 @@
 
 .sidebar-actions .btn-delete:hover {
     background: #dc2626;
+}
+.api-sidebar .params-header h4 {
+    color: #d4d4d4;
+}
+
+.api-sidebar .btn-add-param {
+    background-color: #646cff;
+}
+
+.api-sidebar .btn-add-param:hover {
+    background-color: #5558d6;
+}
+
+.api-sidebar .params-empty {
+    background-color: #2a2a2a;
+    color: #999;
+}
+
+.api-sidebar .param-item {
+    border-color: #444;
+    background-color: #252525;
+}
+
+.api-sidebar .param-header {
+    background-color: #2a2a2a;
+    border-bottom-color: #444;
+    color: #d4d4d4;
+}
+
+.api-sidebar .param-header:hover {
+    background-color: #333;
+}
+
+.api-sidebar .param-name {
+    color: #d4d4d4;
+}
+
+.api-sidebar .param-details {
+    background-color: #1e1e1e;
+}
+
+.api-sidebar .form-group label {
+    color: #d4d4d4;
+}
+
+.api-sidebar .form-group input[type="text"],
+.api-sidebar .form-group input[type="number"],
+.api-sidebar .form-group select,
+.api-sidebar .form-group textarea {
+    border-color: #444;
+    background-color: #2a2a2a;
+    color: #f9f9f9;
+}
+
+.api-sidebar .form-group input[type="text"]:focus,
+.api-sidebar .form-group input[type="number"]:focus,
+.api-sidebar .form-group select:focus,
+.api-sidebar .form-group textarea:focus {
+    border-color: #646cff;
+    box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.1);
+}
+
+.api-sidebar .form-group input[type="checkbox"] {
+    accent-color: #646cff;
+}
+
+.api-sidebar .object-properties {
+    background-color: #252525;
+    border-color: #444;
+}
+
+.api-sidebar .object-header h5 {
+    color: #d4d4d4;
+}
+
+.api-sidebar .btn-add-prop {
+    background-color: #646cff;
+}
+
+.api-sidebar .btn-add-prop:hover {
+    background-color: #5558d6;
+}
+
+.api-sidebar .object-empty {
+    background-color: #1e1e1e;
+    color: #999;
+}
+
+.api-sidebar .property-item {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+.api-sidebar .prop-name-input,
+.api-sidebar .prop-type-select {
+    border-color: #444;
+    background-color: #252525;
+    color: #f9f9f9;
 }

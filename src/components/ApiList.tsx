@@ -1,7 +1,8 @@
 import './ApiList.css';
+import type { APIPath } from '../types/openapi';
 
 interface ApiListProps {
-  paths: Record<string, any>;
+  paths: Record<string, APIPath>;
   onApiClick: (path: string, method: string) => void;
 }
 
