@@ -1,0 +1,92 @@
+.api-list {
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.api-list h3 {
+    margin: 0 0 1rem 0;
+    color: #f9f9f9;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.empty-message {
+    color: #6b7280;
+    font-style: italic;
+    text-align: center;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.api-items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.api-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.api-item:hover {
+    border-color: #646cff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.method-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    min-width: 70px;
+    text-align: center;
+}
+
+.method-get {
+    background: #10b981;
+    color: white;
+}
+
+.method-post {
+    background: #3b82f6;
+    color: white;
+}
+
+.method-put {
+    background: #f59e0b;
+    color: white;
+}
+
+.method-delete {
+    background: #ef4444;
+    color: white;
+}
+
+.method-patch {
+    background: #8b5cf6;
+    color: white;
+}
+
+.method-options,
+.method-head {
+    background: #6b7280;
+    color: white;
+}
+
+.api-path {
+    font-family: 'Courier New', monospace;
+    font-size: 1rem;
+    color: #1f2937;
+    font-weight: 500;
+}

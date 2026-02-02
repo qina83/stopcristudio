@@ -1,0 +1,107 @@
+.api-form-container {
+    margin: 2rem 0;
+}
+
+.btn-add-api {
+    padding: 0.75rem 1.5rem;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-add-api:hover {
+    background: #059669;
+}
+
+.api-form {
+    background: #f9f9f9;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    border: 2px solid #10b981;
+}
+
+.api-form h3 {
+    margin: 0 0 1rem 0;
+    color: #333;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.api-form .form-group {
+    flex: 0 0 150px;
+    text-align: left;
+}
+
+.api-form .form-group-path {
+    flex: 1;
+}
+
+.api-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+.api-form input,
+.api-form select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+    background: white;
+    color: #333;
+}
+
+.api-form input:focus,
+.api-form select:focus {
+    outline: none;
+    border-color: #10b981;
+}
+
+.form-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.btn-submit {
+    padding: 0.6rem 1.5rem;
+    background: #10b981;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-submit:hover {
+    background: #059669;
+}
+
+.btn-cancel {
+    padding: 0.6rem 1.5rem;
+    background: #6b7280;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background: #4b5563;
+}
