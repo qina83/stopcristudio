@@ -69,14 +69,20 @@ Users CANNOT:
 - **Validation**: Must be valid OpenAPI format
 - **Behavior**: Overwrite current project (no merge)
 - **Supported formats**: JSON & YAML
+- **Confirmation**: Ask user if importing while project is being edited
 
 #### User Flow
 1. User clicks "Import" button
 2. File picker opens
 3. User selects JSON or YAML file
-4. System validates OpenAPI format
-5. If valid → loads into editor and overwrites current project
-6. If invalid → shows error message
+4. **If current project has unsaved changes:**
+   - Show confirmation dialog
+   - Options: "Import & Discard", "Cancel"
+   - If user chooses "Cancel" → return to current project
+5. **If no unsaved changes or user confirms:**
+   - System validates OpenAPI format
+   - If valid → loads into editor and overwrites current project
+   - If invalid → shows error message with details
 
 ---
 
@@ -207,22 +213,32 @@ See `openapi-spec-example.json` for a complete working example that demonstrates
 ## Next Steps
 
 ### ✅ Completed
-1. **State Management** - Zustand installed & configured
-2. **UI Library** - Material-UI installed & ready
-3. **Core Data Types** - TypeScript interfaces defined (`src/types/api.ts`)
-4. **Zustand Store** - API store with all actions (`src/store/apiStore.ts`)
+1. **React + Vite Project** - Initialized with TypeScript & ESLint
+2. **State Management** - Zustand installed & configured with devtools
+3. **UI Library** - Material-UI installed (@mui/material, @mui/icons-material, emotion)
+4. **Core Data Types** - Complete TypeScript interfaces (`src/types/api.ts`)
+5. **Zustand Store** - Full API store with 20+ actions (`src/store/apiStore.ts`)
+6. **Design Documentation** - Design choices finalized (DESIGN_CHOICES.md)
+7. **Component Architecture** - 28 components specified with props & MUI usage (COMPONENT_ARCHITECTURE.md)
+8. **UI Layout** - Sidebar tree view + master-detail pattern designed
+9. **UX Improvements** - Add buttons in section headers, inline delete with confirmation
+10. **Build Verification** - Project compiles successfully (34 modules, 143.36 kB)
 
 ### 🚀 To Do (Prioritized)
-1. **Component Architecture** - Plan reusable MUI components
-2. **Main Layout Component** - Header, Sidebar, Content area structure
-3. **Header Component** - Title, Import/Download buttons, unsaved indicator
-4. **Sidebar Component** - Endpoint list, Models list, navigation
-5. **Endpoint Editor** - Form for editing endpoint details
-6. **Parameter Forms** - Query and path parameter editor
-7. **Schema Builder** - UI for building/editing schemas
-8. **Import/Export Functions** - File upload & download handlers
-9. **OpenAPI Validation** - Validate imported specs & exported data
-10. **Unsaved Changes Warning** - Prevent data loss on navigation
+1. **App.tsx & Main Layout** - Root component with Header, Sidebar, MainPanel structure
+2. **Header Component** - Title, Import/Download buttons, unsaved indicator
+3. **Sidebar Component** - EndpointsSection & ModelsSection with tree view
+4. **EndpointItem & ModelItem** - Sidebar item components with selection & delete
+5. **MainPanel & EmptyState** - Content area showing selected editor or empty state
+6. **EndpointEditor** - Complete form for editing endpoint details (path, method, auth, etc.)
+7. **ModelEditor** - Form for editing model name, description, and schema
+8. **ParametersEditor** - Query and path parameter management UI
+9. **ResponsesEditor** - Response status code and body editor
+10. **SchemaBuilder** - Recursive UI for building complex types (primitives, objects, arrays)
+11. **Import/Export Handlers** - File upload/download utilities for JSON & YAML
+12. **OpenAPI Validation** - Validate imported specs and exported data
+13. **Dialog Components** - ImportDialog, DownloadDialog, UnsavedChangesDialog, ConfirmDeleteDialog
+14. **Polish & Testing** - Edge cases, error handling, user feedback
 
 ---
 
