@@ -1,136 +1,42 @@
-.app {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+#root {
+    max-width: 1280px;
+margin: 0 auto;
+padding: 2rem;
+text-align: center;
 }
 
-.app-header {
-  background: #1a1a1a;
-  padding: 1rem 2rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+}
+.logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.app-header h1 {
-  margin: 0;
-  color: #fff;
-  font-size: 1.5rem;
+@keyframes logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+  to {
+      transform: rotate(360deg);
+  }
 }
 
-.app-main {
-  flex: 1;
-  padding: 0;
-  max-width: 100%;
-  width: 100%;
-  margin: 0;
+@media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
 }
 
-.landing-page {
-  padding: 3rem 2rem;
-  max-width: 600px;
-  margin: 0 auto;
-  text-align: center;
+.card {
+    padding: 2em;
 }
 
-.project-container {
-  display: flex;
-  height: calc(100vh - 60px);
-}
-
-.project-view {
-  flex: 1;
-  padding: 2rem;
-  overflow-y: auto;
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.project-view h2 {
-  margin-bottom: 1.5rem;
-}
-
-.spec-preview {
-  margin-top: 2rem;
-}
-
-.spec-preview h3 {
-  text-align: left;
-  margin-bottom: 1rem;
-  color: #f9f9f9;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.spec-preview pre {
-  text-align: left;
-  background: #1e1e1e;
-  color: #d4d4d4;
-  padding: 1.5rem;
-  border-radius: 4px;
-  overflow-x: auto;
-  max-height: 400px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.project-view pre {
-  text-align: left;
-  background: #1e1e1e;
-  color: #d4d4d4;
-  padding: 1.5rem;
-  border-radius: 4px;
-  overflow-x: auto;
-  max-height: 500px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.project-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.btn-add-api {
-  padding: 0.75rem 1.5rem;
-  background: #10b981;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  margin: 2rem 0;
-}
-
-.btn-add-api:hover {
-  background: #059669;
-}
-
-.project-view button {
-  margin: 0;
-  padding: 0.75rem 1.5rem;
-  background: #646cff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-}
-
-.project-view .btn-save {
-  background: #10b981;
-}
-
-.project-view .btn-save:hover {
-  background: #059669;
-}
-
-.project-view button:hover {
-  background: #535bf2;
+.read-the-docs {
+    color: #888;
 }
